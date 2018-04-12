@@ -246,7 +246,8 @@ sudo cp $IMAGE_CONFIGS/ssh/sshd-config-updater $FILESYSTEM_ROOT/usr/bin/
 sudo chmod +x $FILESYSTEM_ROOT/usr/bin/sshd-config-updater
 sudo cp $IMAGE_CONFIGS/ssh/sshd-clear-denied-sessions $FILESYSTEM_ROOT/usr/bin
 sudo chmod +x $FILESYSTEM_ROOT/usr/bin/sshd-clear-denied-sessions
-sudo cp src/libwrap/tcp-wrappers-7.6.q/tcpdmatch $FILESYSTEM_ROOT/usr/bin
+dpkg --fsys-tarfile `ls target/debs/tcpd_*_amd64.deb | head -n 1` | \
+    tar -xOf - ./usr/sbin/tcpdmatch | sudo dd of=$FILESYSTEM_ROOT/usr/bin/tcpdmatch
 
 ## copy platform rc.local
 sudo cp $IMAGE_CONFIGS/platform/rc.local $FILESYSTEM_ROOT/etc/
